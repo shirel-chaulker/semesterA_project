@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h> 
-#include "typesStructs.h"
+#include "Structs.h"
 #include"oneSnapShot.h"
 #pragma warning(disable:4996)
 

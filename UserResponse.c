@@ -1,9 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
-#include "typesStructs.h"
+#include "Structs.h"
 #include "fileFunction.h"
-#include "AcceptingProcess.h"
 #include "oneSnapShot.h"
 #include "resetCollectionsFile.h"
 #include "structHeaderFunction.h"

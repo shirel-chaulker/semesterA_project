@@ -1,7 +1,7 @@
 #include <string.h>
 #include <stdio.h>
-#include <time.h>
-#include "typesStructs.h"
+
+#include "Structs.h"
 #include "SnapShotList.h"
 #pragma warning(disable:4996)
 

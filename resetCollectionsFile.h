@@ -4,3 +4,7 @@ void deleteDictionaryDLLAndPro();
 
 extern int restet;
 #pragma once
+ 
+
+
+// i already pass this file

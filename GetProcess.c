@@ -1,8 +1,8 @@
 #include <conio.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
-#include "typesStructs.h"
+#include "Structs.h"
+#include "GetProcess.h"
 #include "oneSnapShot.h"
 
 #pragma warning(disable:4996)

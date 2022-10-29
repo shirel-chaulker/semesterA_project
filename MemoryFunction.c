@@ -1,8 +1,8 @@
 #include <stdlib.h> 
 #include <stdio.h>
-#include <time.h>
-#include "typesStructs.h"
-#include "operationFunction.h"
+
+#include "Structs.h"
+#include "MemoryFunction.h"
 
 #pragma warning(disable:4996)
 

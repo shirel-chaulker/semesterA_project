@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include <time.h>
-#include "typesStructs.h"
+
+#include "Structs.h"
 #include "typesFilesHeader.h"
 #include "fileFunction.h"
 #include "oneSnapShot.h"

@@ -1,7 +1,6 @@
 #include <stdlib.h> 
 #include <stdio.h>
-#include <time.h>
-#include "typesStructs.h"
+#include "Structs.h"
 #include "typesFilesHeader.h"
 #include "SnapShotList.h"
 #include "structHeaderFunction.h"

@@ -1,17 +1,14 @@
 #include <stdlib.h> 
 #include <stdio.h>
 #include <time.h>
-#include "typesStructs.h"
+#include "Structs.h"
 #include "oneSnapShot.h"
-#include "AcceptingProcess.h"
+#include "GetProcess.h"
 #include "structHeaderFunction.h"
 #include "typesFilesHeader.h"
-#include "operationFunction.h"
+#include "MemoryFunction.h"
 #include "homePageHTML.h"
 #include "displayFunction.h"
-
-
-
 #pragma warning(disable:4996)
 
 snapshot* snapshot_Head = NULL;

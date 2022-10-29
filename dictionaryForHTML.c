@@ -1,11 +1,10 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
-#include "typesStructs.h"
-#include "AcceptingProcess.h"
+#include "Structs.h"
 #include "oneSnapShot.h"
 #include "dictionaryFunctions.h"
-#include "operationFunction.h"
+#include "MemoryFunction.h"
 #include "homePageHTML.h"
 #include "homePageDLL.h"
 #pragma warning(disable:4996)

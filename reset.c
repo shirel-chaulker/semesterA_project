@@ -1,7 +1,7 @@
 #include <stdlib.h> 
 #include <stdio.h>
-#include <time.h>
-#include "typesStructs.h"
+
+#include "Structs.h"
 #include "resetCollectionsFile.h"
 #include "homePageHTML.h"
 #pragma warning(disable:4996)
