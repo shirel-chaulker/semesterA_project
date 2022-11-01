@@ -1,5 +1,6 @@
 #include <stdio.h>
-#include <stdlib.h> 
+#include <stdlib.h>
+#include "log.h"
 #include "Structs.h"
 #include"oneSnapShot.h"
 #pragma warning(disable:4996)
@@ -7,7 +8,7 @@
 
 void PrintList()
 {
-	//LogEvent("Print program started\n");
+	LogEvent("Print program started");
 	PROCESS* move = PROCESS_Head;
 	PROCESS* print = PROCESS_Head;
 
@@ -16,11 +17,10 @@ void PrintList()
 		print = move;
 		move = move->next;
 		printf("the number is %d\n", print->numbersOfDLL);
-		//LogEvent("A document has been printed\n");
+		LogEvent("A document has been printed");
 
 	}
-	//LogEvent("The printing process is finished and the program PrintList is closed\n\n");
-	printf("\n\n\n");
+	
 }
 
 void PrintCount()
@@ -33,17 +33,17 @@ void PrintCount()
 		print = move;
 		move = move->next;
 		printf("the countProcess is %d\n", print->countProcess);
-		//LogEvent("A document has been printed\n");
+		LogEvent("A document has been printed");
 
 	}
 	printf("the tail is %d\n", PROCESS_Tail->countProcess);
-	//LogEvent("The printing process is finished and the program PrintList is closed\n\n");
+	LogEvent(" the print succed");
 }
 
 
 void PrintListDictionary()
 {
-	//LogEvent("Print program started\n");
+	LogEvent("Print program started");
 	dictionaryDLL* move = dictionaryDLL_Head;
 	dictionaryDLL* print = dictionaryDLL_Head;
 
@@ -52,32 +52,30 @@ void PrintListDictionary()
 		print = move;
 		move = move->next;
 		printf("the number is %s\n", print->nameOfDLL);
-		//LogEvent("A document has been printed\n");
+		LogEvent("A document has been printed");
 
 	}
-	//LogEvent("The printing process is finished and the program PrintList is closed\n\n");
+	
 	printf("\n\n\n");
 }
 
 void replaceBetweenTwoProcess(PROCESS* processToChange)
 {
-	//LogEvent("enters the Replace function\n");
+	LogEvent("enter the Replace function");
 	PROCESS* changeProcess = processToChange;
 	int numOfProcess;
 
 	if (changeProcess == NULL)
 	{
-    	//LogEvent("No need to swap. No Items in list\n");
-		//There are no numbers
+		LogEvent("there is no item in list");
 	}
 	else if (changeProcess->next == NULL)
 	{
-		//LogEventVal("No need to swap. This is the only number\n", changeProcess->numbersOfDLL);
-		//single
+		LogEvent("no need to swap, there is one item");
 	}
 	else if (changeProcess == PROCESS_Head && changeProcess->next == PROCESS_Tail)
 	{
-		//LogEventVal("swap between two num. There are only two numbers\n", changeProcess->numbersOfDLL);
+		LogEvent("swap between two items");
 		numOfProcess = changeProcess->countProcess;
 		changeProcess->countProcess = changeProcess->next->countProcess;
 		changeProcess->next->countProcess = numOfProcess;
@@ -92,7 +90,7 @@ void replaceBetweenTwoProcess(PROCESS* processToChange)
 	}
 	else if (changeProcess == PROCESS_Head)
 	{
-		//LogEventVal("swap starts from the beginning. This is the first document\n", changeProcess->numbersOfDLL);
+		
 		numOfProcess = changeProcess->countProcess;
 		changeProcess->countProcess = changeProcess->next->countProcess;
 		changeProcess->next->countProcess = numOfProcess;
@@ -109,7 +107,7 @@ void replaceBetweenTwoProcess(PROCESS* processToChange)
 	}
 	else if (changeProcess->next == PROCESS_Tail)
 	{
-		//LogEventVal("swap between two num. The number is one before last\n", changeProcess->numbersOfDLL);
+		LogEvent("swap with the number before the last one");
 		numOfProcess = changeProcess->countProcess;
 		changeProcess->countProcess = changeProcess->next->countProcess;
 		changeProcess->next->countProcess = numOfProcess;
@@ -124,7 +122,7 @@ void replaceBetweenTwoProcess(PROCESS* processToChange)
 	}
 	else
 	{
-		//LogEventVal("swap between two num. The change starts from the middle\n", changeProcess->numbersOfDLL);
+		LogEvent("sort from the middle");
 		numOfProcess = changeProcess->countProcess;
 		changeProcess->countProcess = changeProcess->next->countProcess;
 		changeProcess->next->countProcess = numOfProcess;
@@ -138,34 +136,30 @@ void replaceBetweenTwoProcess(PROCESS* processToChange)
 		//Change from the middle
 	}
 
-	//LogEvent("The replacement process is done and the program Replace is finished\n\n");
+	LogEvent("the system has finish to sort");
 }
 
 void SortingBetweenTwoProcessCountDLL()
 {
-	//LogEvent("enters the Sorting_between_two function\n");
+	
 
 	PROCESS* curreProcess = PROCESS_Head;
 	if (!curreProcess)
 	{
-		//LogError("The list is empty\n");
-		// The list is empty
+		LogError(strerror(GetLastError()));
 		return;
 	}
 
 	char change = 1;
 	while (change != 0)
 	{
-		//LogEvent("The sorting process has started\n");
+		
 
 		change = 0;
 		while (curreProcess != NULL)
 		{
 			if (curreProcess->next != NULL && curreProcess->numbersOfDLL > curreProcess->next->numbersOfDLL)
 			{
-				//LogEventVal("the current number\n", curreProcess->numbersOfDLL);
-				//LogEventVal("the next number\n", curreProcess->next->numbersOfDLL);
-				//LogEventVal("The current number is bigger than the next number\n\n", curreProcess->numbersOfDLL);
 				replaceBetweenTwoProcess(curreProcess);
 				change++;
 			}
@@ -174,10 +168,10 @@ void SortingBetweenTwoProcessCountDLL()
 
 		curreProcess = PROCESS_Head;
 	}
-	//LogEvent("The sorting process has Ended\n\n");
+	
 	PrintList();
 
-	//LogEvent("The selection process is done and the program Sorting_between_two is finished\n\n");
+	
 }
 
 

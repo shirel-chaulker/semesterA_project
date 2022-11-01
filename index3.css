@@ -1,15 +1,33 @@
+body {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAQElEQVQIW2P89OvDfwYo+PHjJ4zJwMHBzsAIk0SXAKkCS2KTAEu++vQSbizIKGQAl0SXAJkGlsQmAbcT2Shk+wH0sCzAEOZW1AAAAABJRU5ErkJggg==);
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande";
+}
 header {
   display: flex;
   flex-direction: row;
   gap: 20px;
-  justify-content: center;
+  justify-content: left;
+  margin-left: 20px;
 }
-
+.btn {
+  border: none;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  border: 1.5px solid #000;
+  border-radius: 20px;
+  padding: 0.5rem 0;
+  width: 120px;
+  font-weight: 400;
+  background: #000;
+  color: white;
+  margin: 0.5rem;
+  cursor: pointer;
+}
 table,
 th,
 td,
 tr {
-  border: solid black 3px;
+  border: 2px solid black;
 }
 td {
   padding: 5px;

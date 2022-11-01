@@ -72,6 +72,9 @@
     <ClCompile Include="homePage.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="log.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="index.css" />
@@ -80,6 +83,8 @@
     <None Include="index2.html" />
     <None Include="index3.css" />
     <None Include="index3.html" />
+    <None Include="aboutMe.css" />
+    <None Include="aboutMe.html" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="oneSnapShot.h">
@@ -121,5 +126,13 @@
     <ClInclude Include="homePageHTML.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="log.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="pic1.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

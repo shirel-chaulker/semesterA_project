@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h> 
 #include "Structs.h"
+#include "log.h"
 #include "typesFilesHeader.h"
 #include "fileFunction.h"
 #pragma warning(disable:4996)
@@ -15,8 +16,7 @@ void uploadSnapToFile()
 	int write;
 	if (snapShotHeaderFile->versionSnapShot == NULL )
 	{
-		//the snapShotHeaderFile not exists
-		printf("There are no  existing Snapshots");
+		
 		return;
 	}
 	printf("enter name for file\n");
@@ -24,7 +24,7 @@ void uploadSnapToFile()
 	FILE* f = fopen(fileName, "wb");
 	if (!f)
 	{
-		printf("The file did not open");
+		LogError(strerror(GetLastError()));
 		exit(1);
 	}
 
@@ -33,20 +33,20 @@ void uploadSnapToFile()
 	write = fwrite(snapShotHeaderFile,sizeof(snapShotHeader),1,f);
 	if (!write)
 	{
-		//error
+		LogError(strerror(GetLastError()));
 		return;
 	}
 	write = fwrite(processHeaderFile, sizeof(processHeader), 1, f);
 	if (!write)
 	{
-		//error
+		LogError(strerror(GetLastError()));
 		return;
 	}
 	
 	write = fwrite(DLLHeaderFile, sizeof(DLLNameHeaders), 1, f);
 	if (!write)
 	{
-			//error
+		LogError(strerror(GetLastError()));
 		return;
 	}
 
@@ -60,7 +60,7 @@ void uploadSnapToFile()
 	     write = fwrite(currentSnapShot, sizeof(snapshot), 1, f);
 		 if (!write)
 		 {
-			 //error
+			 LogError(strerror(GetLastError()));
 			 return;
 		 }
 
@@ -71,7 +71,7 @@ void uploadSnapToFile()
 			 write = fwrite(currentProcess, sizeof(PROCESS), 1, f);
 			 if (!write)
 			 {
-				 //error
+				 LogError(strerror(GetLastError()));
 				 return;
 			 }
 
@@ -82,7 +82,7 @@ void uploadSnapToFile()
 				 write = fwrite(currentDLL, sizeof(DLLName), 1, f);
 				 if (!write)
 				 {
-					 //error
+					 LogError(strerror(GetLastError()));
 					 return;
 				 }
 				 

@@ -1,6 +1,6 @@
 #include <stdlib.h> 
 #include <stdio.h>
-
+#include "log.h"
 #include "Structs.h"
 #include "MemoryFunction.h"
 
@@ -8,7 +8,7 @@
 
 
 int addingDll(snapshot* snapShot) {
-
+	LogEvent("enter the function (addingDll)");
 	PROCESS* moveProcess = snapShot->myprocess;
 	long sumOfDll = 0;
 

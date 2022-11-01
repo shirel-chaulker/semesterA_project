@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include <time.h>
+#include "log.h"
 #include "Structs.h"
 #include "oneSnapShot.h"
 #include "dictionaryFunctions.h"
@@ -57,10 +57,10 @@ char* dynamicNav(int DLLCountHTML, int ProceessCountHTML, SIZE_T MemoryAvgHTML)
 	dataNav[0] = NULL;
 	if (!dataNav)
 	{
-		//error
+		LogError(strerror(GetLastError()));
 		return ;
 	}
-	sprintf(dataNav,"\n<div> Dll's cnt: %d </div>\n<div> Processes cnt: %d </div>\n<div> Memory avg: %d </div>\n", DLLCountHTML, ProceessCountHTML, MemoryAvgHTML);
+	sprintf(dataNav,"\n<div> Dll's cnt: %d </div>\n<div> Processes cnt: %d </div>\n<div> Memory avg: %llu </div>\n", DLLCountHTML, ProceessCountHTML, MemoryAvgHTML);
 
 	return dataNav;
 }
@@ -73,11 +73,11 @@ char* dynamicDLLTable(dictionaryDLL* D_DLLHeadHtml)
 	
 	dictionaryDLL* currDictionaryDLL = dictionaryDLL_Head;
 	char* dataDLLTable = (char*)malloc(500);
-	//dataDLLTable[0] = NULL;
+	
 	char* allTheOptions = (char*)malloc(sizeof(dictionaryDLL) * dictionaryDLL_Tail->countDictionaryDLL+100);
 	if (!allTheOptions)
 	{
-		//error
+		LogError(strerror(GetLastError()));
 		return;
 	}
 	allTheOptions[0] = NULL;
@@ -87,7 +87,7 @@ char* dynamicDLLTable(dictionaryDLL* D_DLLHeadHtml)
 
 	    if (!dataDLLTable)
 	    {
-	    	//error
+			LogError(strerror(GetLastError()));
 	    	return;
 	    }
 		sprintf(dataDLLTable, "\n<tr>\n<td> %s </td >\n<td ><a href = \"useDll_%d.html\" >dll%d.html</a></td>\n</tr>\n", currDictionaryDLL->nameOfDLL, countDLLPageHTML, countDLLPageHTML);
@@ -106,7 +106,7 @@ char* dinamicTitleProcessesUsed(dictionaryDLL* oneDictionaryDLL)
 	titelProcesses[0] = NULL;
 	if (!titelProcesses)
 	{
-		//error
+		LogError(strerror(GetLastError()));
 		return;
 	}
 	sprintf(titelProcesses, "<h1> %d process used </h1>", oneDictionaryDLL->dictionaryProcessTail->countDictionaryProcess);
@@ -125,7 +125,7 @@ char* dinamicTableProcessesUsed(dictionaryDLL* oneDictionaryDLL)
 	allTheOptions[0] = NULL;
 	if (!allTheOptions)
 	{
-		//error
+		LogError(strerror(GetLastError()));
 		return;
 	}
 	while (processesOfDDLL != NULL)
@@ -133,10 +133,10 @@ char* dinamicTableProcessesUsed(dictionaryDLL* oneDictionaryDLL)
 
 	     if (!tableProcesses)
 	     {
-	     	//error
+			 LogError(strerror(GetLastError()));
 	     	return;
 	     }
-	     sprintf(tableProcesses, "\n<tr>\n<td> %d </td>\n<td> %s </td>\n</tr>\n", processesOfDDLL->countDictionaryProcess, processesOfDDLL->nameOfProcess);
+	     sprintf(tableProcesses, "\n<tr>\n<td><div class=\"namedll\">%d </div></td>\n<td><div class=\"linkdll\"> %s </div>\n</td></tr>\n", processesOfDDLL->countDictionaryProcess, processesOfDDLL->nameOfProcess);
 		 processesOfDDLL = processesOfDDLL->next;
 		 strcat(allTheOptions, tableProcesses);
 	}

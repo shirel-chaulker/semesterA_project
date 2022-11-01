@@ -3,10 +3,39 @@
   padding: 0px;
   box-sizing: border-box;
 }
+body {
+  background: linear-gradient(
+    to right,
+    rgba(42, 207, 127, 0.699),
+    rgb(187, 224, 223)
+  );
+}
+.btn {
+  border: none;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  border: 1.5px solid #000;
+  border-radius: 20px;
+  padding: 0.5rem 0;
+  width: 120px;
+  font-weight: 400;
+  background: #000;
+  color: white;
+  margin: 0.5rem;
+  cursor: pointer;
+}
+
+h3 {
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: -2px;
+  font-size: 2em;
+  margin: 20px 0;
+}
 
 html {
   font-family: "Poppins";
-  height: 100%;
+  /* height: 100%; */
 }
 
 header {
@@ -36,7 +65,6 @@ span {
 }
 
 span > div {
-  border: solid green 3px;
   padding: 3px;
   padding-right: 20px;
 }
@@ -45,48 +73,63 @@ main {
   flex-direction: row;
   justify-content: space-around;
   width: 100%;
-  height: 100%;
-  background-color: blanchedalmond;
+  height: 100vh;
 }
 
 .leftTables {
   display: flex;
   flex-direction: column;
+  border-collapse: collapse;
   justify-items: center;
   width: 50%;
 }
 .lefttableLink {
-  margin: 100px;
-  width: 50%;
-  height: 100px;
-  background-color: blueviolet;
+  margin-top: 20px;
+  margin-left: 70px;
+  width: 70%;
+
+  border-collapse: collapse;
+  color: black;
+}
+.lefttableLink thead {
+  background: rgb(84, 169, 188);
 }
 .rightTable {
   display: flex;
   flex-direction: column;
+  border-collapse: collapse;
   width: 50%;
-  background-color: aqua;
 }
 table,
 th,
 td,
 tr {
-  border: solid black 3px;
+  text-align: center;
+  border: solid black 1px;
   border-collapse: collapse;
 }
+
 table {
-  width: 100%;
+  width: 90%;
 }
-/* td {
-  width: 60%;
-  height: 50px;
-  overflow: auto;
-  border: 70%;
-} */
 
 .table_2 {
-  margin: 100px;
-  width: 400px;
-  height: 100px;
-  background-color: blueviolet;
+  width: 550px;
+  margin-top: 20px;
+  margin-left: 100px;
+  color: black;
+}
+.table_2 thead {
+  background: rgb(84, 169, 188);
+}
+
+div.namedll {
+  width: 300px;
+  margin: auto;
+  overflow-x: auto;
+}
+
+div.linkdll {
+  width: 70px;
+  margin: auto;
 }

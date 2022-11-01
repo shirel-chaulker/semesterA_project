@@ -1,6 +1,7 @@
 #include <stdlib.h> 
 #include <stdio.h>
 #include <string.h>
+#include "log.h"
 #include "homePageHTML.h"
 
 #pragma warning(disable:4996)
@@ -18,12 +19,14 @@ char* newNameOfFile = 0;
 
 char* readFromFile() {
 	
+	LogEvent("start to open the file");
 
 	if (firstTimeInFile == 0 && strcmp(nameFile, "index.html") != 0)
 	{
 		fileR = fopen(nameFile, "r");
 		if (!fileR)
 		{
+			LogError(strerror(GetLastError()));
 			return NULL;
 		}
 
@@ -33,6 +36,7 @@ char* readFromFile() {
 		fileR = fopen(nameFile, "r");
 		if (!fileR)
 		{
+			LogError(strerror(GetLastError()));
 			return NULL;
 		}
 	}
@@ -41,7 +45,7 @@ char* readFromFile() {
 		fileR = fopen("homePage.html", "r");
 		if (!fileR)
 		{
-			//error
+			LogError(strerror(GetLastError()));
 			return 0;
 		}
 	}
@@ -50,7 +54,7 @@ char* readFromFile() {
 		fileR = fopen(newNameOfFile, "r");
 		if (!fileR)
 		{
-			//error
+			LogError(strerror(GetLastError()));
 			return 0;
 		}
 	}
@@ -59,14 +63,14 @@ char* readFromFile() {
 		fileR = fopen(newNameOfFile, "r");
 		if (!fileR)
 		{
-			//error
+			LogError(strerror(GetLastError()));
 			return 0;
 		}
 	}
 
 
-
-    // Get the file size
+	LogEvent(" Get the file size");
+    
     char* charCount = (char*)malloc(10000);
 	if (!charCount)
 	{
@@ -86,7 +90,8 @@ char* readFromFile() {
 
 
 
-    // alloc space as file size
+	LogEvent("alloc space as file size");
+    
 	char* inThefile = (char*)malloc(fileSize);
 	if (!inThefile)
 	{
@@ -101,6 +106,7 @@ char* readFromFile() {
 		fileR = fopen(nameFile, "r");
 		if (!fileR)
 		{
+			LogError(strerror(GetLastError()));
 			return NULL;
 		}
 
@@ -111,6 +117,7 @@ char* readFromFile() {
 		fileR = fopen(nameFile, "r");
 		if (!fileR)
 		{
+			LogError(strerror(GetLastError()));
 			return NULL;
 		}
 	}
@@ -119,7 +126,7 @@ char* readFromFile() {
 		fileR = fopen("homePage.html", "r");
 		if (!fileR)
 		{
-			//error
+			LogError(strerror(GetLastError()));
 			return 0;
 		}
 	}
@@ -128,7 +135,7 @@ char* readFromFile() {
 		fileR = fopen(newNameOfFile, "r");
 		if (!fileR)
 		{
-			//error
+			LogError(strerror(GetLastError()));
 			return 0;
 		}
 	}
@@ -137,7 +144,7 @@ char* readFromFile() {
 		fileR = fopen(newNameOfFile, "r");
 		if (!fileR)
 		{
-			//error
+			LogError(strerror(GetLastError()));
 			return 0;
 		}
 	}
@@ -162,13 +169,13 @@ char* readFromFile() {
 
 char* saveInToFileHTML(char* newFile)
 {
-	//enter the function PhotoCopying
+	
 	if (strcmp(nameFile, "index.html") == 0)
 	{
 	   file = fopen("homePage.html", "w");
 	   if (!file)
 	   {
-	    	//error - The file (PhotoCopying.html) did not open
+		   LogError(strerror(GetLastError()));
 	    	return 1;
 	   }
 
@@ -182,7 +189,7 @@ char* saveInToFileHTML(char* newFile)
         file = fopen(newNameOfFile, "w");
         if (!file)
         {
-        	//error - The file (PhotoCopying.html) did not open
+			LogError(strerror(GetLastError()));
 			return 1;
         }
 
@@ -195,7 +202,7 @@ char* saveInToFileHTML(char* newFile)
 		file = fopen(newNameOfFile, "w");
 		if (!file)
 		{
-			//error - The file (PhotoCopying.html) did not open
+			LogError(strerror(GetLastError()));
 			return 1;
 		}
 
@@ -205,13 +212,14 @@ char* saveInToFileHTML(char* newFile)
 	}
 	else
 	{
-		//no exist file
-		printf("no exist file\n");
+		LogEvent("no exist file");
+		
 		return 1;
 	}
 	free(newFile);
 	return newNameOfFile;
-	//The file (PhotoCopying.html) is closed, the function PhotoCopying is finished
+	LogEvent("the file is closed");
+	
 }
 
 

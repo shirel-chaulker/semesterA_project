@@ -1,6 +1,7 @@
 #include <stdio.h>
-
+#include <stdlib.h>
 #include "Structs.h"
+#include "log.h"
 #include "typesFilesHeader.h"
 #include "fileFunction.h"
 #include "oneSnapShot.h"
@@ -26,21 +27,21 @@ void loadSnapFromFile()
 	loadSnapShotHeaderFile = (snapShotHeader*)malloc(sizeof(snapShotHeader));
 	if (!loadSnapShotHeaderFile)
 	{
-		//error
+		LogError(strerror(GetLastError()));
 		return 1;
 	}
 	processHeader* loadProcessHeaderFile;
 	loadProcessHeaderFile = (processHeader*)malloc(sizeof(processHeader));
 	if (!loadProcessHeaderFile)
 	{
-		//error
+		LogError(strerror(GetLastError()));
 		return 1;
 	}
 	DLLNameHeaders* loadDLLHeaderFile;
 	loadDLLHeaderFile = (DLLNameHeaders*)malloc(sizeof(DLLNameHeaders));
 	if (!loadDLLHeaderFile)
 	{
-		//error
+		LogError(strerror(GetLastError()));
 		return 1;
 	}
 
@@ -52,21 +53,21 @@ void loadSnapFromFile()
 	int read = fread(loadSnapShotHeaderFile, sizeof(snapShotHeader), 1, f);
 	if (!read)
 	{
-		//error
+		LogError(strerror(GetLastError()));
 		return 1;
 	}
 
     read = fread(loadProcessHeaderFile, sizeof(processHeader), 1, f);
 	if (!read)
 	{
-		//error
+		LogError(strerror(GetLastError()));
 		return 1;
 	}
 
 	read = fread(loadDLLHeaderFile, sizeof(DLLNameHeaders), 1, f);
 	if (!read)
 	{
-		//error
+		LogError(strerror(GetLastError()));
 		return 1;
 	}
 
@@ -74,21 +75,21 @@ void loadSnapFromFile()
 	currentSnapShot = (snapshot*)malloc(sizeof(snapshot));
 	if (!currentSnapShot)
 	{
-		//error
+		LogError(strerror(GetLastError()));
 		return 1;
 	}
 
 	currentProcess = (PROCESS*)malloc(sizeof(PROCESS));
 	if (!currentProcess)
 	{
-		//error
+		LogError(strerror(GetLastError()));
 		return 1;
 	}
 
 	currentDLL = (DLLName*)malloc(sizeof(DLLName));
 	if (!currentDLL)
 	{
-		//error
+		LogError(strerror(GetLastError()));
 		return 1;
 	}
 
@@ -97,7 +98,7 @@ void loadSnapFromFile()
 		read = fread(currentSnapShot, sizeof(snapshot), 1, f);
 		if (!read)
 		{
-			//error
+			LogError(strerror(GetLastError()));
 			return 1;
 		}
 
@@ -109,7 +110,7 @@ void loadSnapFromFile()
 			read = fread(currentProcess, sizeof(PROCESS), 1, f);
 			if (!read)
 			{
-				//error
+				LogError(strerror(GetLastError()));
 				return 1;
 			}
 
@@ -121,7 +122,7 @@ void loadSnapFromFile()
 				read = fread(currentDLL, sizeof(DLLName), 1, f);
 				if (!read)
 				{
-					//error
+					LogError(strerror(GetLastError()));
 					return 1;
 				}
 

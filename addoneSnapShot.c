@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <time.h>
 #include "Structs.h"
+#include "log.h"
 #include "oneSnapShot.h"
 #include "GetProcess.h"
 #include "structHeaderFunction.h"
@@ -17,22 +18,32 @@ snapshot* snapshot_Tail = NULL;
 int countOfSnapsNumber = 0;
 int loadFormFile = 0;
 int titleProcesses = 0;
+char str[100] = "";
 
 void addOneSnapShot(snapshot* newSnapShotFromFile)
 {
+	LogEvent("create one snapShot");
+	time_t t;
+	time(&t);
+	struct tm* timeinfo;
+	timeinfo = localtime(&t);
+
 	newSnapShot = (snapshot*)malloc(sizeof(snapshot));
 	if (!newSnapShot)
 	{
-		//error - No memory allocation
+		LogError(strerror(GetLastError()));
 		exit(1);
 	}
 
 	
-	addProcess(NULL);
+	addProcess(NULL);  //enter to the function to get process (head_pro)
 
+	//Enter only if it does not download from a file
 	if (loadFormFile == 0)
 	{
-		GetProcessesInfo();
+		sprintf(str, "%d.%d.%d/%d:%d:%d", timeinfo->tm_mday, timeinfo->tm_mon + 1, timeinfo->tm_year + 1900, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
+
+		GetProcessesInfo(); //creates a linked list of processors
 		SortingBetweenTwoProcessCountDLL();
 		PrintCount();
 		newSnapShot->myprocess = PROCESS_Head;
@@ -47,7 +58,7 @@ void addOneSnapShot(snapshot* newSnapShotFromFile)
 	newSnapShot->countSnapsNumber = countOfSnapsNumber;
 	strcpy(newSnapShot->timeOfSnapshot, str);
 	newSnapShot->next = NULL;
-	if (snapshot_Head == NULL)
+	if (snapshot_Head == NULL)  // create sort list of snapshot
 	{
 
 		snapshot_Head = newSnapShot;
@@ -65,20 +76,18 @@ void addOneSnapShot(snapshot* newSnapShotFromFile)
 		headerSnapShotDetails();
 
 		firstTimeInFile = 0;
-		char* temporaryHTML = displayProcessesInTable(newSnapShot);
-		char* temporaryTitle = displayProcessesInTitle(newSnapShot);
-		char* linkToSample = dynamicTitleHtml("index2.html", temporaryHTML, temporaryTitle);
-		//free(temporaryTitle);
+		char* temporaryHTML = displayProcessesInTable(newSnapShot);  //create dynamic process table
+		char* temporaryTitle = displayProcessesInTitle(newSnapShot); // create dynamic process title
+		char* linkToSample = dynamicTitleHtml("index2.html", temporaryHTML, temporaryTitle); 
 		free(temporaryHTML);
 
 		firstTimeInFile = 0;
 
 
-		char* dynamicLineHtml = displaySnapShotInTable(newSnapShot, linkToSample, addingDll(newSnapShot), memoryAverage(newSnapShot));
+		char* dynamicSnap = displaySnapShotInTable(newSnapShot, linkToSample, addingDll(newSnapShot), memoryAverage(newSnapShot));
         free(linkToSample);
-		char* nameF = dynamicHtml("index.html", dynamicLineHtml,NULL);
-		//free(nameF);
-		//free(dynamicLineHtml);
+		char* nameF = dynamicHtml("index.html", dynamicSnap,NULL);
+	
 		
 }
 
@@ -99,10 +108,10 @@ void headerSnapShotDetails()
 char* displaySnapShotInTable(snapshot* snapShot_html,char* NameProcessHtml,int countDLLInSnapHTML,SIZE_T sizeOfMemoryHTML) {
 
 	char* lineInTable = (char*)malloc(sizeof(int)*100);
-	//lineInTable[0] = NULL;
+	
 	if (!lineInTable)
 	{
-		//errors
+		LogError(strerror(GetLastError()));
 		return ;
 	}
 	sprintf(lineInTable, "<tr>\n<td> %d </td>\n<td><a href =\"%s\" >Sample%d</a></td>\n<td> %d </td>\n<td> %d </td>\n<td> %d </td>\n</tr>\n", snapShot_html->countSnapsNumber, NameProcessHtml, snapShot_html->countSnapsNumber, snapShot_html->countOfProcess, countDLLInSnapHTML, sizeOfMemoryHTML);
@@ -117,13 +126,13 @@ char* displayDLLSInProcess(PROCESS* htmlProcess) {
 	char* origin = lineInTable;
 	if (!lineInTable)
 	{
-		//error
+		LogError(strerror(GetLastError()));
 		return ;
 	}
 	char* allTheOptions = (char*)malloc(sizeof(DLLName)* htmlProcess->numbersOfDLL+10000);
 	if (!allTheOptions)
 	{
-		//error
+		LogError(strerror(GetLastError()));
 		return ;
 	}
 	allTheOptions[0] = NULL;
@@ -149,13 +158,13 @@ char* displayProcessesInTable(snapshot* snapShot_html) {
 	char* lineInTable = (char*)malloc(sizeof(PROCESS)*100000);
 	if (!lineInTable)
 	{
-		//error
+		LogError(strerror(GetLastError()));
 		return 1;
 	}
 	char* allTheProcesses = (char*)malloc(sizeof(PROCESS) * snapShot_html->countOfProcess + 10000000);
 	if (!allTheProcesses)
 	{
-		//error
+		LogError(strerror(GetLastError()));
 		return 1;
 	}
 	allTheProcesses[0] = NULL;
@@ -167,14 +176,14 @@ char* displayProcessesInTable(snapshot* snapShot_html) {
 
 			optionOfDLL = displayDLLSInProcess(process);
 			lineInTable[0] = "";
-			sprintf(lineInTable, "<tr>\n<td> %s </td>\n<td> %d </td>\n<td> %d </td>\n<td> %d <i class=\"fa fa-warning\" style=\"color:red\"> </i></td>\n<td> %d </td>\n<td> %d </td>\n<td> %d </td>\n<td> %d </td>\n<td><select>\n<option selected>dll's list</option>\n%s</select></td>\n</tr>", process->nameOfProcess, process->processId, process->PageFaultCount, process->WorkingSetSize, process->QuotaPagedPoolUsage, process->QuotaPeakPagedPoolUsage, process->PagefileUsage, process->numbersOfDLL, optionOfDLL);
+			sprintf(lineInTable, "<tr>\n<td> %s </td>\n<td> %lu </td>\n<td> %lu </td>\n<td> %llu <i class=\"fa fa-warning\" style=\"color:red\"> </i></td>\n<td> %llu </td>\n<td> %llu </td>\n<td> %llu </td>\n<td> %d </td>\n<td><select>\n<option selected>dll's list</option>\n%s</select></td>\n</tr>", process->nameOfProcess, process->processId, process->PageFaultCount, process->WorkingSetSize, process->QuotaPagedPoolUsage, process->QuotaPeakPagedPoolUsage, process->PagefileUsage, process->numbersOfDLL, optionOfDLL);
 
 	    }
 		else
 		{
 			optionOfDLL = displayDLLSInProcess(process);
 			lineInTable[0] = "";
-			sprintf(lineInTable, "<tr>\n<td> %s </td>\n<td> %d </td>\n<td> %d </td>\n<td> %d </td>\n<td> %d </td>\n<td> %d </td>\n<td> %d </td>\n<td> %d </td>\n<td><select>\n<option selected>dll's list</option>\n%s</select></td>\n</tr>", process->nameOfProcess, process->processId, process->PageFaultCount, process->WorkingSetSize, process->QuotaPagedPoolUsage, process->QuotaPeakPagedPoolUsage, process->PagefileUsage, process->numbersOfDLL, optionOfDLL);
+			sprintf(lineInTable, "<tr>\n<td> %s </td>\n<td> %lu </td>\n<td> %lu </td>\n<td> %llu </td>\n<td> %llu </td>\n<td> %llu </td>\n<td> %llu </td>\n<td> %d </td>\n<td><select>\n<option selected>dll's list</option>\n%s</select></td>\n</tr>", process->nameOfProcess, process->processId, process->PageFaultCount, process->WorkingSetSize, process->QuotaPagedPoolUsage, process->QuotaPeakPagedPoolUsage, process->PagefileUsage, process->numbersOfDLL, optionOfDLL);
 		}
 		process = process->next;
 		strcat(allTheProcesses, lineInTable);
@@ -192,7 +201,7 @@ char* displayProcessesInTitle(snapshot* snapShot_html) {
 	lineInTable[0] = NULL;
 	if (!lineInTable)
 	{
-		//error
+		LogError(strerror(GetLastError()));
 		return ;
 	}
 	sprintf(lineInTable, "<h1> Samples List Number : %d At %s </h1>", snapShot_html->countSnapsNumber, snapShot_html->timeOfSnapshot);

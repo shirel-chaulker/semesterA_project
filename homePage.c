@@ -1,6 +1,7 @@
 #include <stdlib.h> 
 #include <stdio.h>
 #include <string.h>
+#include "log.h"
 #include "homePageHTML.h"
 #include "homePageDLL.h"
 #pragma warning(disable:4996)
@@ -13,6 +14,7 @@ char nameFile[50] = "";
 
 char* dynamicHtml(char* nameOfFile, char* addString, char* topHtml)
 {
+	LogEvent("creating dynamic html page");
 	strcpy(nameFile, nameOfFile);
 	char* dynamicTable = addString;
 	char* htmlFileTemplate = readFromFile();
@@ -42,16 +44,16 @@ char* dynamicHtml(char* nameOfFile, char* addString, char* topHtml)
 
 		found = strstr(htmlFileTemplate, SEPERATOR);
 		newFileSpace = (char*)malloc(strlen(found) + strlen(topHtml) + 2 + strlen(dynamicTable));
-		//newFileSpace = "";
+		
 		strcpy(newFileSpace, topHtml);
-		//free(topHtml);
+		
 	}
-	// find the token
+	LogEvent("find a token");
 	strcat(newFileSpace, dynamicTable);
 	strcat(newFileSpace, found);
 	char* nameForFile = saveInToFileHTML(newFileSpace);
 	free(htmlFileTemplate);
-	//free(dynamicTable);
+	
 	return nameForFile;
 
 }
@@ -74,7 +76,7 @@ char* dynamicTitleHtml(char* nameOfFile, char* addString, char* title) {
 	char* newFileSpace = (char*)malloc(strlen(htmlFileTemplate) + 1 + strlen(dynamicTitle));
 	if (!newFileSpace)
 	{
-		//error
+		LogError(strerror(GetLastError()));
 		return;
 	}
 
@@ -88,7 +90,7 @@ char* dynamicTitleHtml(char* nameOfFile, char* addString, char* title) {
 	char* linkName = dynamicHtml(nameOfFile, addString, newFileSpace);
 
 
-	//free(dynamicTitle);
+	
 	free(htmlFileTemplate);
 
 	return linkName;
@@ -109,7 +111,7 @@ int len = found - htmlFileTemplate;
 char* newFileSpace = (char*)malloc(strlen(htmlFileTemplate) + 1 + strlen(dynamicTitle));
 if (!newFileSpace)
 {
-	//error
+	LogError(strerror(GetLastError()));
 	return;
 }
 
@@ -120,7 +122,7 @@ strcat(newFileSpace, found);
 char* nameForFile = saveInToFileHTML(newFileSpace);
 
 
-//free(dynamicTitle);
+
 free(htmlFileTemplate);
 
 return nameForFile;

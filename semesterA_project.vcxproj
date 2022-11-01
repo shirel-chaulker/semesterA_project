@@ -32,6 +32,7 @@
     <ClCompile Include="headers.c" />
     <ClCompile Include="homePage.c" />
     <ClCompile Include="loadSnapFromFile.c" />
+    <ClCompile Include="log.c" />
     <ClCompile Include="UserResponse.c" />
     <ClCompile Include="MemoryFunction.c" />
     <ClCompile Include="readAndSaveFile.c" />
@@ -40,6 +41,8 @@
     <ClCompile Include="uploadSnapToFile.c" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="aboutMe.css" />
+    <None Include="aboutMe.html" />
     <None Include="index.css" />
     <None Include="index.html" />
     <None Include="index2.css" />
@@ -54,6 +57,7 @@
     <ClInclude Include="fileFunction.h" />
     <ClInclude Include="homePageDLL.h" />
     <ClInclude Include="homePageHTML.h" />
+    <ClInclude Include="log.h" />
     <ClInclude Include="oneSnapShot.h" />
     <ClInclude Include="MemoryFunction.h" />
     <ClInclude Include="resetCollectionsFile.h" />
@@ -61,6 +65,9 @@
     <ClInclude Include="structHeaderFunction.h" />
     <ClInclude Include="typesFilesHeader.h" />
     <ClInclude Include="Structs.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="pic1.jpg" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

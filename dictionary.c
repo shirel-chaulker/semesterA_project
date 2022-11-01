@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "log.h"
 #include "Structs.h"
 #include "oneSnapShot.h"
 #include "dictionaryFunctions.h"
@@ -10,12 +11,12 @@ dictionaryDLL* dictionaryDLL_Head = NULL;
 dictionaryDLL* dictionaryDLL_Tail = NULL;
 
 S_dictionaryProcess* usedDictionaryProcess = NULL;
-//void check();
+
 
 int countnewDictionaryDLL = 0;
  int notExistsDLLInList = 0;
  char* nameDH = "";
- //int freeProcess = 0;
+ 
 
 void dictionaryProcess(snapshot* snapShotList){
 	FirstListProcess = 1;
@@ -31,9 +32,7 @@ void dictionaryProcess(snapshot* snapShotList){
 			addProcess(currProcess);
 			OldcurrProcess = currProcess;
 			currProcess = currProcess->next;
-		///*	if (freeProcess == 0) {
-		//		free(OldcurrProcess);
-		//	}*/
+		
 		}
 
 		currSnapShot = currSnapShot->next;
@@ -67,11 +66,11 @@ void dictionaryProcess(snapshot* snapShotList){
 		    		{
 						notExistsDLLInList = 1;
 						checkDictionaryDLL(currentCheckDLL, currentPro);
-						//free(currentCheckDLL);
+						
 
 						currentDictionaryDLL1 = dictionaryDLL_Tail;
 		    		}
-					currentDictionaryDLL1 = currentDictionaryDLL1->next;// if the dlls are  
+					currentDictionaryDLL1 = currentDictionaryDLL1->next;
 		    	}
 		    	if (notExistsDLLInList != 1)
 		    	{
@@ -88,8 +87,7 @@ void dictionaryProcess(snapshot* snapShotList){
 		free(OldcurrentPro);
 		}
 
-		//return dictionaryDLL_Tail->countDictionaryDLL;
-		//check();
+		
 }
 
 
@@ -108,7 +106,7 @@ void addDictionaryDLL(DLLName* nameSortDLL, PROCESS* processSortDLL) {
 	dictionaryDLL* newDictionaryDLL = (dictionaryDLL*)malloc(sizeof(dictionaryDLL));
 	if (!newDictionaryDLL)
 	{
-		//error
+		LogError(strerror(GetLastError()));
 		return ;
 	}
 	countnewDictionaryDLL++;
@@ -132,7 +130,7 @@ void addDictionaryDLL(DLLName* nameSortDLL, PROCESS* processSortDLL) {
 		dictionaryDLL_Tail = newDictionaryDLL;
 	}
 	MakeProcessDictionary(NULL);
-	//free(nameSortDLL);
+	
 	
 }
 

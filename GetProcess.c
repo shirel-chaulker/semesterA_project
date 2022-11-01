@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "Structs.h"
+#include "log.h"
 #include "GetProcess.h"
 #include "oneSnapShot.h"
 
@@ -14,7 +15,7 @@ int FirstListProcess = 0;
 void PrintMemoryInfo(DWORD processID)
 {
 
-	PROCESS* ret = (PROCESS*)malloc(sizeof(PROCESS));
+	PROCESS* ret = (PROCESS*)malloc(sizeof(PROCESS));  //create all details of process
 	HANDLE hProcess;
 	PROCESS_MEMORY_COUNTERS pmc;
 
@@ -22,13 +23,13 @@ void PrintMemoryInfo(DWORD processID)
 	ret->prev = NULL;
 	ret->next = NULL;
 	ret->processId = processID;
-	// Open process in order to receive information
+	LogEvent("Open process in order to receive information");
 	hProcess = OpenProcess(PROCESS_QUERY_INFORMATION |
 		PROCESS_VM_READ,
 		FALSE, processID);
 	if (NULL == hProcess)
 	{
-		// Write to log a warning
+		
 		return;
 	}
 
@@ -38,7 +39,7 @@ void PrintMemoryInfo(DWORD processID)
 	TCHAR wDllName[MAX_PATH];
 	char regularCharArr[MAX_PATH];
 
-	// Get Process Name
+	LogEvent("Get Process Name");
 	if (GetModuleFileNameEx(hProcess, 0, FoundProcessName, MAX_PATH))
 	{
 
@@ -50,13 +51,10 @@ void PrintMemoryInfo(DWORD processID)
 			return ;
 		}
 
-
-		// At this point, buffer contains the full path to the executable
 	}
 	else
 	{
-		// You better call GetLastError() here
-		// Write To log
+		LogError(strerror(GetLastError()));
 	}
 
 	if (GetProcessMemoryInfo(hProcess, &pmc, sizeof(pmc)))
@@ -71,7 +69,7 @@ void PrintMemoryInfo(DWORD processID)
 	}
 
 
-	// Get Dlls List
+	LogEvent("Get dll list");
 
 	if (EnumProcessModules(hProcess, hMods, sizeof(hMods), &cbNeeded))
 	{
@@ -90,6 +88,10 @@ void PrintMemoryInfo(DWORD processID)
 			}
 		}
 
+	}
+	else {
+		DLLName_Tail->countDLL = 0;
+		DLLName_Tail->countDLL = NULL;
 	}
 	ret->dllTail = DLLName_Tail;
 	ret->dll = DLLName_Head;
@@ -115,14 +117,14 @@ void GetProcessesInfo()
 	// * Receive all process ID and put in aProcesses Array
 	if (!EnumProcesses(aProcesses, sizeof(aProcesses), &cbNeeded))
 	{
-		// Error. Write to log
+		LogError(strerror(GetLastError()));
 		return 1;
 	}
 
 	// Calculate how many process identifiers were returned.
 	cProcesses = cbNeeded / sizeof(DWORD);
 
-	// Print the memory usage for each process
+	
 	// *Loop of all processes
 
 	if (userResponse == 1)
@@ -150,7 +152,7 @@ void GetProcessesInfo()
 
 			if (!EnumProcesses(aProcesses, sizeof(aProcesses), &cbNeeded))
 			{
-				// Error. Write to log
+				LogError(strerror(GetLastError()));
 				return 1;
 			}
 
@@ -182,7 +184,7 @@ void GetProcessesInfo()
 
 			if (!EnumProcesses(aProcesses, sizeof(aProcesses), &cbNeeded))
 			{
-				// Error. Write to log
+				LogError(strerror(GetLastError()));
 				return 1;
 			}
 
@@ -195,9 +197,7 @@ void GetProcessesInfo()
 
 
 
-	int aaa = 1;
 
-	// For each Process to get its Memory Information
 
 }
 

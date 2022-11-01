@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "Structs.h"
+#include "log.h"
 #include "dictionaryFunctions.h"
 #pragma warning(disable : 4996)
 
@@ -22,8 +23,7 @@ void MakeProcessDictionary(PROCESS* useProcessInDLL)
 	usedDictionaryProcess = (S_dictionaryProcess*)malloc(sizeof(S_dictionaryProcess));
 	if (usedDictionaryProcess == NULL)
 	{
-		//char* str = strerror(GetLastError());
-		//LogError(str);
+		LogError(strerror(GetLastError()));
 
 		return;
 	}

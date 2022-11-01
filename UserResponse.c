@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include "log.h"
 #include "Structs.h"
 #include "fileFunction.h"
 #include "oneSnapShot.h"
@@ -14,18 +15,13 @@
 
 
 int userResponse = 0;
-char str[100] = "";
+
 int main()
 {
 	int HTMLUsed = 0;
 	firstTimeHomePage = 0;
 	headerMalloc();
-	time_t t;
-	time(&t);
-	struct tm* timeinfo;
-	timeinfo = localtime(&t);
-	int a = 1;
-
+	
 	while (userResponse != 9)
 	{
 
@@ -35,54 +31,51 @@ int main()
 		switch (userResponse) {
 		case 1:
 
-			sprintf(str, "%d.%d.%d/%d:%d:%d", timeinfo->tm_mday, timeinfo->tm_mon + 1, timeinfo->tm_year + 1900, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
 			addOneSnapShot(NULL);
-			//Take One SnapShot
+			LogEvent("the system take one snapShot");
 			break;
 
 		case 2:
 
-			sprintf(str, "%d.%d.%d/%d:%d:%d", timeinfo->tm_mday, timeinfo->tm_mon + 1, timeinfo->tm_year + 1900, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
 			addOneSnapShot(NULL);
-			//Take 20 SnapShots
+			LogEvent("the system take 20 snapShot");
 			break;
 		case 3:
 
-			sprintf(str, "%d.%d.%d/%d:%d:%d", timeinfo->tm_mday, timeinfo->tm_mon + 1, timeinfo->tm_year + 1900, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
+			
 			addOneSnapShot(NULL);
-			//Start Long SnapShot
+			LogEvent("the system is starting long snapShot");
 			break;
 
 		case 5:
 			HtmlPage();
 			HTMLUsed = 1;
-			//Generate HTML Report
+			LogEvent("creating a html report");
 			break;
 		case 6:
 			
-			a = 1;
 			if (HTMLUsed == 0) {
 				resetCollections(snapshot_Head);
-
 			}
 			else {
 				deleteDictionaryDLLAndPro();
 				resetCollections(snapshot_Head);
 				HTMLUsed = 0;
 			}
-			//Reset Collections
+			LogEvent("start to reset collection");
+
 			break;
 
 		case 7:
 
 			uploadSnapToFile();
-			//Save in File 
+			LogEvent("save in file");
 			break;
 
 		case 8:
 			
 			loadSnapFromFile();
-			//Load from File
+			LogEvent("load from files");
 			break;
 
 		case 9:
@@ -90,8 +83,17 @@ int main()
 			countOfCreateFileIndex3 = 0;
 			firstTimeInFile = 0;
 			firstTimeHomePage = 0;
-			//free(newNameOfFile);
-			saveInToFileHTML(readFromFile());
+
+			if (HTMLUsed == 0) {
+				resetCollections(snapshot_Head);
+			}
+			else {
+				deleteDictionaryDLLAndPro();
+				resetCollections(snapshot_Head);
+				HTMLUsed = 0;
+			}
+
+			LogEvent("the program is deleted");
 			break;
 		}
 

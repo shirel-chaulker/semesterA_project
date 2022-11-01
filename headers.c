@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "Structs.h"
+#include "log.h"
 #include "resetCollectionsFile.h"
 #include "structHeaderFunction.h"
 #pragma warning(disable:4996)
@@ -12,14 +13,14 @@ void headerMalloc()
 	snapShotHeaderFile = (snapShotHeader*)malloc(sizeof(snapShotHeader));
 	if (!snapShotHeaderFile)
 	{
-		//error
+		LogError(strerror(GetLastError()));
 		return;
 	}
 
 	processHeaderFile = (processHeader*)malloc(sizeof(processHeader));
 	if (!processHeaderFile)
 	{
-		//error
+		LogError(strerror(GetLastError()));
 		return;
 	}
 
@@ -27,7 +28,7 @@ void headerMalloc()
 	DLLHeaderFile = (DLLNameHeaders*)malloc(sizeof(DLLNameHeaders));
 	if (!DLLHeaderFile)
 	{
-		//error
+		LogError(strerror(GetLastError()));
 		return;
 	}
 

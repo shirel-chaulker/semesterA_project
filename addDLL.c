@@ -1,6 +1,7 @@
 #include <stdlib.h> 
 #include <stdio.h>
 #include "Structs.h"
+#include "log.h"
 #include "typesFilesHeader.h"
 #include "SnapShotList.h"
 #include "structHeaderFunction.h"
@@ -22,11 +23,11 @@ void addDLL(char dllName[])
 			DLLName_Head = NULL;
 			return;
 		}
-	// The function has started
+	//create dll sort linkedlist 
 	DLLName* newDLL = (DLLName*)malloc(sizeof(DLLName));
 	if (!newDLL)
 	{
-		//error - No memory allocation
+		LogError(strerror(GetLastError()));
 		exit(1);
 	}
 

@@ -1,6 +1,7 @@
 #include <string.h>
 #include <stdio.h>
 #include "Structs.h"
+#include "log.h"
 #include "SnapShotList.h"
 #pragma warning(disable:4996)
 
@@ -9,9 +10,10 @@ processNotExist = 0;
 void checkListProcess(PROCESS* CheckProcess)
 {
 	PROCESS* currentProcess = PROCESS_Head;
-
+	LogEvent("check if memory process exist");
 	while (currentProcess != NULL)
 	{
+
 		if ((strcmp(currentProcess->nameOfProcess,CheckProcess->nameOfProcess) == 0) && currentProcess->processId == CheckProcess->processId)
 		{
 			currentProcess->PageFaultCount += CheckProcess->PageFaultCount;
@@ -31,7 +33,7 @@ void checkListProcess(PROCESS* CheckProcess)
 		currentProcess = currentProcess->next;
 	}
 
-
+	LogEvent("finish to combied the memory");
 
 
 }

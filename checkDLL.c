@@ -1,6 +1,6 @@
 #include <string.h>
 #include <stdio.h>
-
+#include "log.h"
 #include "Structs.h"
 #include "SnapShotList.h"
 #pragma warning(disable:4996)
@@ -13,7 +13,7 @@ void checkListDLL(PROCESS* currentProcess, DLLName * CheckDLL)
 	while (currentCheckDLL != NULL)//new 
 	{
 		currentDLL = currentProcess->dll;
-
+		LogEvent("compare between the dll`s");
 		while (currentDLL != NULL)//origin
 		{
 
@@ -22,7 +22,7 @@ void checkListDLL(PROCESS* currentProcess, DLLName * CheckDLL)
 				currentDLL = DLLName_Tail;
 				ExistsDLL = 1;
 			}
-				currentDLL = currentDLL->next;// if the dlls are  
+				currentDLL = currentDLL->next; 
 		}
 	     if (ExistsDLL != 1)
 	      {
@@ -38,7 +38,6 @@ void checkListDLL(PROCESS* currentProcess, DLLName * CheckDLL)
 		
 	}
 
-	int w = 4;
 
 }
 

@@ -1,6 +1,6 @@
 #include <stdlib.h> 
 #include <stdio.h>
-
+#include "log.h"
 #include "Structs.h"
 #include "resetCollectionsFile.h"
 #include "homePageHTML.h"
@@ -9,9 +9,9 @@
 
 void resetCollections(snapshot* headSanpSot)
 {
+	LogEvent("enter the function (resetCollections)");
 	firstTimeInFile = 0;
 	firstTimeHomePage = 0;
-	//free(newNameOfFile);
 	saveInToFileHTML(readFromFile());
 	restet = 1;
 	snapshot* currentSnapShot = headSanpSot;
@@ -44,5 +44,6 @@ void resetCollections(snapshot* headSanpSot)
 		free(oldSnapShot);
 
 	}
+	LogEvent("The function (resetCollections) is done and deleted all\n");
 
 }

@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "Structs.h"
+#include "log.h"
 #include "oneSnapShot.h"
 #include "typesFilesHeader.h"
 #include "resetCollectionsFile.h"
@@ -16,7 +17,7 @@ int countP = 0;
 void addProcess(PROCESS* processNew)
 {
 	addDLL(NULL);
-
+	//LogEvent("creating a new process");
 	if (processNew == NULL)
 	{
 		countP = 0;
@@ -24,27 +25,26 @@ void addProcess(PROCESS* processNew)
 		return;
 	}
 
-	if (FirstListProcess >0)
+	if (FirstListProcess >0)  // if this is not the first list of process
 	{
 		checkListProcess(processNew);
 
 		if (processNotExist == 1)
 		{
 			processNotExist = 0;
-			//freeProcess = 1;
 			return;
 		}
 
 	}
 
-	//freeProcess = 0;
+	
 	++countP;
-
-	// The function has started
+	LogEvent("The function has started");
+	
 	newProcess = (PROCESS*)malloc(sizeof(PROCESS));
 	if (!newProcess)
 	{
-		//error - No memory allocation
+		LogError(strerror(GetLastError()));
 		exit(1);
 	}
 	strcpy(newProcess->nameOfProcess, processNew->nameOfProcess);
