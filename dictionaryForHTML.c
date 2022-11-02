@@ -16,20 +16,22 @@ int countDLLPageHTML = 0;
 char* dynamicNav(int DLLCountHTML, int ProceessCountHTML, SIZE_T MemoryAvgHTML);
 char* dynamicDLLTable(dictionaryDLL* D_DLLHeadHtml);
 char* dynamicNavHtml(char* nameOfFile, char* addString);
-char* dinamicTitleProcessesUsed(dictionaryDLL* oneDictionaryDLL);
-char* dinamicTableProcessesUsed(dictionaryDLL* oneDictionaryDLL);
+char* dynamicTitleProcessesUsed(dictionaryDLL* oneDictionaryDLL);
+char* dynamicTableProcessesUsed(dictionaryDLL* oneDictionaryDLL);
 
 void HtmlPage()
 {
 	countOfCreateFileIndex3 = 0;
-	addProcess(NULL);
-	addDictionaryDLL(NULL, NULL);
-	dictionaryProcess(snapshot_Head);
+	addProcess(NULL); //reset the list
+
+	addDictionaryDLL(NULL, NULL); //reset in the function and she gets 2 parameters
+
+	dictionaryProcess(snapshot_Head); // get single value
 	sortListProcess = PROCESS_Head;
 	int b = PROCESS_Tail->countProcess;
 	dictionaryDLLFunction(sortListProcess);
 	int a = dictionaryDLL_Tail->countDictionaryDLL;
-	SIZE_T c = (SIZE_T)memoryAvgForALLSnapshot();
+	SIZE_T c = (SIZE_T)memoryAvgForALLSnapshot(); //get memory avg
 	char* dataNav = dynamicNav(a,b,c);
 	firstTimeHomePage = 1;
 	firstTimeInFile = 1;
@@ -39,8 +41,8 @@ void HtmlPage()
 	firstTimeInFile = 0;
 	while (currDD != NULL)
 	{
-		char* titleDLL = dinamicTitleProcessesUsed(currDD);
-		char* tableDLL = dinamicTableProcessesUsed(currDD);
+		char* titleDLL = dynamicTitleProcessesUsed(currDD);
+		char* tableDLL = dynamicTableProcessesUsed(currDD);
 		dynamicTitleHtml("index3.html", tableDLL, titleDLL);
 		firstTimeInFile = 0;
 		currDD = currDD->next;
@@ -99,7 +101,7 @@ char* dynamicDLLTable(dictionaryDLL* D_DLLHeadHtml)
 	return allTheOptions;
 }
 
-char* dinamicTitleProcessesUsed(dictionaryDLL* oneDictionaryDLL)
+char* dynamicTitleProcessesUsed(dictionaryDLL* oneDictionaryDLL)
 {
 
 	char* titelProcesses = (char*)malloc(100);
@@ -116,8 +118,9 @@ char* dinamicTitleProcessesUsed(dictionaryDLL* oneDictionaryDLL)
 }
 
 
-char* dinamicTableProcessesUsed(dictionaryDLL* oneDictionaryDLL)
+char* dynamicTableProcessesUsed(dictionaryDLL* oneDictionaryDLL)
 {
+	LogEvent("start to make a new table");
 	S_dictionaryProcess* processesOfDDLL = oneDictionaryDLL->dictionaryProcessUsed;
 	char* tableProcesses = (char*)malloc(10000);
 	tableProcesses[0] = NULL;
